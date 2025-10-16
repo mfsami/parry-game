@@ -1,15 +1,17 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     // References
-    
-    public Rigidbody2D rb;
+
+
 
     // Variables
-    public float moveSpeed = 5f;
 
-    private Vector2 moveDirection;
+    private bool isParrying;
+    private float parryWindowTimer = 2f;
 
     void Update()
     {
@@ -17,21 +19,38 @@ public class Player : MonoBehaviour
     }
 
     // Physics updates should be done in fixed update
-    void FixedUpdate()
-    {
-        Move();
-    }
+    //void FixedUpdate()
+    //{
+    //    Move();
+    //}
 
     void ProcessInputs()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
+        // Deal with timers later
 
-        moveDirection = new Vector2(moveX, moveY).normalized;
+        // GetKey returns true for single frame. Coroutine starts at that frame
+        // Deal with parry animation in here later
+        if (Input.GetKeyDown(KeyCode.Space)){
+            StartCoroutine(ParryWindow());
+        }
+
+        
+
     }
 
-    void Move()
+    IEnumerator ParryWindow()
     {
-        rb.linearVelocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
+        // Open parry window.... then timer
+        isParrying = true;
+        Debug.Log("Parry window open");
+
+        // Wait for seconds
+        yield return new WaitForSeconds(parryWindowTimer);
+
+        // Window closes after timer
+        Debug.Log("Parry window closed");
+        
     }
+
+    
 }
