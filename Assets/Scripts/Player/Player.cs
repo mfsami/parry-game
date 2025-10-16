@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // References
+    // ------- References
 
 
 
-    // Variables
+    // ------- Variables
 
     private bool isParrying;
-    private float parryWindowTimer = 2f;
+
+    // Timers
+    private float parryWindowTimer = 1f;
+    private float parryCooldown = 2f;
 
     void Update()
     {
         ProcessInputs();
     }
 
-    // Physics updates should be done in fixed update
-    //void FixedUpdate()
-    //{
-    //    Move();
-    //}
 
     void ProcessInputs()
     {
@@ -30,11 +28,14 @@ public class Player : MonoBehaviour
 
         // GetKey returns true for single frame. Coroutine starts at that frame
         // Deal with parry animation in here later
-        if (Input.GetKeyDown(KeyCode.Space)){
-            StartCoroutine(ParryWindow());
-        }
 
-        
+        if (!isParrying)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartCoroutine(ParryWindow());
+            }
+        }
 
     }
 
@@ -49,8 +50,14 @@ public class Player : MonoBehaviour
 
         // Window closes after timer
         Debug.Log("Parry window closed");
-        
-    }
 
-    
+        // Cool down to prevent spam
+        Debug.Log("Cooling down");
+        yield return new WaitForSeconds(parryCooldown);
+
+        // Can parry again after cooldown
+        isParrying = false;
+        Debug.Log("Can Parry");
+
+    }
 }
