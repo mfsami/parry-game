@@ -3,14 +3,16 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     // Deal with oncollisionenter and check radius parry collision and deal with destruction... defelction here?
-    void Start()
-    {
-        
-    }
+    // For now destroy when hitting player
 
-    // Update is called once per frame
-    void Update()
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        Destroy(gameObject);
+    }
+    // Destroys if outside cam view
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }
