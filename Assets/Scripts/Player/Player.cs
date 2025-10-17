@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     // ------- Variables
 
-    private bool isParrying;
+    public bool isParrying;
 
     // Timers
     private float parryWindowTimer = 1f;
@@ -52,12 +52,11 @@ public class Player : MonoBehaviour
         Debug.Log("Parry window closed");
 
         // Cool down to prevent spam
-        Debug.Log("Cooling down");
         yield return new WaitForSeconds(parryCooldown);
 
         // Can parry again after cooldown
         isParrying = false;
-        Debug.Log("Can Parry");
+
 
     }
 }
