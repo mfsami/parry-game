@@ -132,7 +132,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f3a178d5171ad4fa377b552af4db14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  bullet: {fileID: -8286513195175019924}
+  owner: {fileID: 0}
+  player: {fileID: 0}
   dmgDealt: 1
+  bulletSpeed: 5
 --- !u!58 &-7971675256644063633
 CircleCollider2D:
   m_ObjectHideFlags: 0

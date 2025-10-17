@@ -12,9 +12,9 @@ public class EnemyShoot : MonoBehaviour
     // ------- References
     public Transform FirePoint;
     public Transform PlayerPos;
+    public GameObject bulletPrefab;
 
     // ------- Variables
-    public float bulletSpeed;
     public Rigidbody2D bullet;
     private float coolDown = 2f;
     private float coolDownRemaining = 0f;
@@ -41,8 +41,16 @@ public class EnemyShoot : MonoBehaviour
         // Instantiate at fire point
         Rigidbody2D shotBullet = Instantiate(bullet, FirePoint.position, FirePoint.rotation);
 
+        // Get bullet component
+        Bullet bulletScript = shotBullet.GetComponent<Bullet>();
+
+        // Set the owner
+        bulletScript.owner = this.transform;
+        bulletScript.player = PlayerPos;
+        //Debug.Log($"{this.name} owns bullet {shotBullet.name}");
+
         // Calculate players direction vector
-        // Subtracting gives vector dir from firepoint -> player
+        // B - A = "how do I get from A to B?"
         Vector2 direction = (PlayerPos.position - FirePoint.position).normalized;
 
         // Bullet rotation
@@ -59,7 +67,7 @@ public class EnemyShoot : MonoBehaviour
         shotBullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         // Set velocity and launch to that direction
-        shotBullet.linearVelocity = direction * bulletSpeed;
+        shotBullet.linearVelocity = direction * bulletScript.bulletSpeed;
 
     }
 }

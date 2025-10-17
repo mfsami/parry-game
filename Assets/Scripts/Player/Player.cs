@@ -43,13 +43,13 @@ public class Player : MonoBehaviour
     {
         // Open parry window.... then timer
         isParrying = true;
-        Debug.Log("Parry window open");
+        //Debug.Log("Parry window open");
 
         // Wait for seconds
         yield return new WaitForSeconds(parryWindowTimer);
 
         // Window closes after timer
-        Debug.Log("Parry window closed");
+        //Debug.Log("Parry window closed");
 
         // Cool down to prevent spam
         yield return new WaitForSeconds(parryCooldown);
