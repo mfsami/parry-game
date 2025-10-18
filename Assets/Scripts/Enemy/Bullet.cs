@@ -21,21 +21,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        // Notice get component on gameObject. Not collision
-
-        // Check if this collider belongs to something with health
-        Health hp = other.gameObject.GetComponent<Health>();
-
-        // Player hit
-        if (hp != null )
-        {
-            hp.health -= dmgDealt;
-            Debug.Log($"Hit {other.name}, HP: {hp.health}");
-            Destroy(gameObject);
-            return; // force stop so it doesn't check parry
-
-        }
+        Debug.Log($"Trigger with: {other.name}, tag={other.tag}");
 
         // Parry window hit
         if (other.CompareTag("Parry"))
@@ -45,10 +31,33 @@ public class Bullet : MonoBehaviour
             //Debug.Log("In Parry Window");
             if (player != null && player.isParrying)
             {
+                Destroy(gameObject);
                 Deflect();
                 Debug.Log("parry");
+                return;
             }
         }
+
+
+        // Notice get component on gameObject. Not collision
+
+        // Check if this collider belongs to something with health
+        Health hp = other.gameObject.GetComponent<Health>();
+
+
+
+        // Player hit
+        if (other.CompareTag("Player"))
+        {
+            hp.health -= dmgDealt;
+            Debug.Log($"Hit {other.name}, HP: {hp.health}");
+            Destroy(gameObject);
+            
+
+        }
+
+        
+        
 
     }
 
@@ -56,6 +65,8 @@ public class Bullet : MonoBehaviour
     {
         // Instantiate new bullet at player to enemy
         Rigidbody2D shotBullet = Instantiate(bullet, player.position, player.rotation);
+
+        Debug.Log($"Reflected spawned: {shotBullet != null}");
 
         // Calculate enemy direction vector
         // B - A = "how do I get from A to B?"
