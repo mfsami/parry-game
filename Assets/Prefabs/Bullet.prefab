@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8286513195175019924}
   - component: {fileID: -1811555249795240881}
   - component: {fileID: -7971675256644063633}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f3a178d5171ad4fa377b552af4db14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  bullet: {fileID: -8286513195175019924}
+  bullet: {fileID: 3732667754398925173}
   owner: {fileID: 0}
   player: {fileID: 0}
   dmgDealt: 1

@@ -16,7 +16,7 @@ public class EnemyShoot : MonoBehaviour
 
     // ------- Variables
     public Rigidbody2D bullet;
-    private float coolDown = 2f;
+    private float coolDown = 5f;
     private float coolDownRemaining = 0f;
 
 
