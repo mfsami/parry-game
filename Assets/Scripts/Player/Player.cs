@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public Transform owner; // owner of fired bullet
     public Transform player;
     Bullet bulletScript;
+    public GameObject parryVisual;
 
 
     // ------- Variables
@@ -17,8 +18,8 @@ public class Player : MonoBehaviour
     public bool isParrying;
 
     // Timers
-    private float parryWindowTimer = 1f;
-    private float parryCooldown = 2f;
+    private float parryWindowTimer = 0.1f; // 250 ms window
+    private float parryCooldown = 0.1f; // 800 ms cooldown after failed attempt
 
     void Update()
     {
@@ -39,10 +40,12 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 StartCoroutine(ParryWindow());
-
                 
             }
+            
         }
+
+        
 
         
 
@@ -52,7 +55,7 @@ public class Player : MonoBehaviour
     {
         // Open parry window.... then timer
         isParrying = true;
-        //Debug.Log("Parry window open");
+        parryVisual.SetActive(true);
 
         // Wait for seconds
         yield return new WaitForSeconds(parryWindowTimer);
@@ -62,6 +65,7 @@ public class Player : MonoBehaviour
 
         // Cool down to prevent spam
         yield return new WaitForSeconds(parryCooldown);
+        parryVisual.SetActive(false);
 
         // Can parry again after cooldown
         isParrying = false;
