@@ -16,7 +16,7 @@ public class Bullet : MonoBehaviour
 
     // ------- Variables
     public float dmgDealt;
-    public float bulletSpeed = 5f;
+    public float bulletSpeed = 10f;
     
 
 
@@ -33,7 +33,10 @@ public class Bullet : MonoBehaviour
             if (playerComp != null && playerComp.isParrying)
             {
                 Destroy(gameObject);
-                playerComp.Deflect(owner);
+
+                if (owner) playerComp.Deflect(owner);
+                else Destroy(gameObject);
+                
                 
                 // Turn off parry window after deflect
                 playerComp.isParrying = false;

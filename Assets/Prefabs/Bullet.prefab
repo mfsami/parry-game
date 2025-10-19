@@ -136,7 +136,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   player: {fileID: 0}
   dmgDealt: 1
-  bulletSpeed: 5
+  bulletSpeed: 13
 --- !u!58 &-7971675256644063633
 CircleCollider2D:
   m_ObjectHideFlags: 0

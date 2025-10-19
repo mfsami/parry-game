@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
 
     // ------- Variables
-    public float bulletSpeed = 5f;
+    public float bulletSpeed = 15f;
 
     public bool isParrying;
 

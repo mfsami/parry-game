@@ -16,23 +16,51 @@ public class EnemyShoot : MonoBehaviour
 
     // ------- Variables
     public Rigidbody2D bullet;
-    private float coolDown = 5f;
     private float coolDownRemaining = 0f;
 
+    private int shotsRemaining = 0; // keep track of shots left in burst
+    private float burstDelay = 0.3f;
 
-    void Update()
+    private void Start()
     {
-        // Timer starts
+        // first wait before firing
+        coolDownRemaining = Random.Range(2f, 5f);
+    }
+
+
+
+    private void Update()
+    {
         coolDownRemaining -= Time.deltaTime;
 
         if (coolDownRemaining < 0f)
         {
-            Shoot();
+            
+            // this will fire until no shots left
+            if (shotsRemaining > 0)
+            {
+                
+                Shoot();
+                shotsRemaining--;
+                coolDownRemaining = burstDelay;
+            }
 
-            // Reset timer
-            coolDownRemaining = coolDown;
+            else
+            {
+                // start new burst
+                shotsRemaining = Random.Range(1, 2); // burst size 
+                Shoot();
+                shotsRemaining--;
+
+                // if more shots remain, use burst delay, else use a full cooldown
+                if (shotsRemaining > 0)
+                    coolDownRemaining = burstDelay;
+                else
+                    coolDownRemaining = Random.Range(2f, 5f);
+            }
+
+            
         }
-        // stop overcomplicating things. you dont always need coroutines
     }
 
 
@@ -44,8 +72,10 @@ public class EnemyShoot : MonoBehaviour
         // Get bullet component
         Bullet bulletScript = shotBullet.GetComponent<Bullet>();
 
-        // Set the owner
-        bulletScript.owner = this.transform;
+        // Set the owner and destroy if owner dead
+        if (bulletScript) bulletScript.owner = this.transform;
+        else Destroy(shotBullet.gameObject);
+
         bulletScript.player = PlayerPos;
         //Debug.Log($"{this.name} owns bullet {shotBullet.name}");
 
