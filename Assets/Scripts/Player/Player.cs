@@ -14,8 +14,9 @@ public class Player : MonoBehaviour
 
     // ------- Variables
     public float newBulletSpeed = 15f;
-
     public bool isParrying;
+    public float swordDurMax = 5f;
+    public float swordDur = 5f;
 
     // ------- Timers
     private float parryWindowTimer = 0.1f; // 250 ms window
@@ -42,32 +43,27 @@ public class Player : MonoBehaviour
 
     void ProcessInputs()
     {
-        // Deal with timers later
+        // Update sharpening state
+        anim.SetBool("IsSharpening", swordDur <= 0);
 
-        // GetKey returns true for single frame. Coroutine starts at that frame
-        // Deal with parry animation in here later
-
-
-        if (!isParrying)
+        if (!isParrying && Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                StartCoroutine(ParryWindow());
-                anim.SetBool("NextAttackTracker", NextAttackTracker);
-                anim.ResetTrigger("Attack");
-                anim.SetTrigger("Attack");
+            // Each parry costs 1 durability
+            swordDur--;
 
-                // flip for next press
-                NextAttackTracker = !NextAttackTracker;
+            StartCoroutine(ParryWindow());
+            anim.SetBool("NextAttackTracker", NextAttackTracker);
+            anim.ResetTrigger("Attack");
+            anim.SetTrigger("Attack");
 
-            }
-            
+            NextAttackTracker = !NextAttackTracker;
         }
 
-        
-
-        
-
+        // restore key for testing
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            swordDur = swordDurMax;
+        }
     }
 
     IEnumerator ParryWindow()

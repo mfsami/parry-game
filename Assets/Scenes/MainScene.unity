@@ -1534,7 +1534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1760365830
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2143,6 +2143,8 @@ MonoBehaviour:
   parryVisual: {fileID: 927968065}
   newBulletSpeed: 50
   isParrying: 0
+  swordDurMax: 5
+  swordDur: 5
   anim: {fileID: 0}
 --- !u!70 &2045299731
 CapsuleCollider2D:
