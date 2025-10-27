@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
 
     // ------- Variables
-    public float bulletSpeed = 15f;
+    public float newBulletSpeed = 15f;
 
     public bool isParrying;
 
@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
         shotBullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         // Set velocity and launch to that direction
-        rb.linearVelocity = direction * bulletSpeed;
+        rb.linearVelocity = direction * newBulletSpeed;
 
         // Change new bullets layer
         shotBullet.gameObject.layer = LayerMask.NameToLayer("DeflectedBullet");
