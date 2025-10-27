@@ -124,12 +124,12 @@ TextureImporter:
       name: IntoSharpen_0
       rect:
         serializedVersion: 2
-        x: 16
+        x: 0
         y: 0
-        width: 29
-        height: 27
+        width: 86
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -146,12 +146,12 @@ TextureImporter:
       name: IntoSharpen_1
       rect:
         serializedVersion: 2
-        x: 106
+        x: 86
         y: 0
-        width: 27
-        height: 26
+        width: 86
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -168,12 +168,12 @@ TextureImporter:
       name: IntoSharpen_2
       rect:
         serializedVersion: 2
-        x: 196
+        x: 172
         y: 0
-        width: 25
-        height: 22
+        width: 86
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -190,12 +190,12 @@ TextureImporter:
       name: IntoSharpen_3
       rect:
         serializedVersion: 2
-        x: 257
+        x: 258
         y: 0
-        width: 52
-        height: 33
+        width: 86
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -212,12 +212,12 @@ TextureImporter:
       name: IntoSharpen_4
       rect:
         serializedVersion: 2
-        x: 343
+        x: 344
         y: 0
-        width: 52
-        height: 33
+        width: 86
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -234,12 +234,12 @@ TextureImporter:
       name: IntoSharpen_5
       rect:
         serializedVersion: 2
-        x: 429
+        x: 430
         y: 0
-        width: 51
-        height: 33
+        width: 86
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -256,12 +256,12 @@ TextureImporter:
       name: IntoSharpen_6
       rect:
         serializedVersion: 2
-        x: 515
+        x: 516
         y: 0
-        width: 51
-        height: 33
+        width: 86
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -278,12 +278,12 @@ TextureImporter:
       name: IntoSharpen_7
       rect:
         serializedVersion: 2
-        x: 601
+        x: 602
         y: 0
-        width: 51
-        height: 33
+        width: 86
+        height: 49
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -300,7 +300,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 6a110fb4138cbbf4aa3ce8749e8ec039
     internalID: 0
     vertices: []
     indices: 
@@ -308,7 +308,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":8.0,"y":1.0},"gridSpriteSize":{"x":86.0,"y":49.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       IntoSharpen_0: -7058042380645560587
       IntoSharpen_1: 3819862769360939047

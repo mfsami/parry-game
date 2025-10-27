@@ -17,9 +17,22 @@ public class Player : MonoBehaviour
 
     public bool isParrying;
 
-    // Timers
+    // ------- Timers
     private float parryWindowTimer = 0.1f; // 250 ms window
     private float parryCooldown = 0.1f; // 800 ms cooldown after failed attempt
+
+    // ------- Animations
+    [SerializeField] Animator anim;
+    const int BaseLayer = 0;
+    bool NextAttackTracker = true;
+
+    private void Awake()
+    {
+        if (!anim)
+        {
+            anim = GetComponent<Animator>();
+        }
+    }
 
     void Update()
     {
@@ -40,7 +53,13 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 StartCoroutine(ParryWindow());
-                
+                anim.SetBool("NextAttackTracker", NextAttackTracker);
+                anim.ResetTrigger("Attack");
+                anim.SetTrigger("Attack");
+
+                // flip for next press
+                NextAttackTracker = !NextAttackTracker;
+
             }
             
         }
