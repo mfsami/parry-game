@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 485239121}
   - component: {fileID: 485239122}
   m_Layer: 0
-  m_Name: UpArrow_0
+  m_Name: Arrow4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1106,7 +1106,7 @@ GameObject:
   - component: {fileID: 945438462}
   - component: {fileID: 945438463}
   m_Layer: 0
-  m_Name: LeftArrow_0
+  m_Name: Arrow2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1275,7 +1275,7 @@ GameObject:
   - component: {fileID: 1113822255}
   - component: {fileID: 1113822256}
   m_Layer: 0
-  m_Name: DownArrow_0
+  m_Name: Arrow1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1794,6 +1794,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1756519991}
+  - component: {fileID: 1756519992}
   m_Layer: 0
   m_Name: Arrows
   m_TagString: Untagged
@@ -1820,6 +1821,28 @@ Transform:
   - {fileID: 485239121}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1756519992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756519990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 801ab81da69c3a640a4d92c3b626cc92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComboUI
+  upArrowSprite: {fileID: 8986649088406608913, guid: aca28b27c9032b24d8df3f7f276a394c, type: 3}
+  downArrowSprite: {fileID: -7137179805908077444, guid: 06ea89d099802ed41a8bdf94a1a2abe0, type: 3}
+  leftArrowSprite: {fileID: 144775311990115912, guid: 607eca29fa6aa5a49b28ede09b51ec5b, type: 3}
+  rightArrowSprite: {fileID: 7635563162873571100, guid: 3da69ba1b98f5504aac3f59361aa7167, type: 3}
+  Player: {fileID: 2045299730}
+  arrowSlots:
+  - {fileID: 1113822256}
+  - {fileID: 945438463}
+  - {fileID: 1987922744}
+  - {fileID: 485239122}
 --- !u!1 &1760365829
 GameObject:
   m_ObjectHideFlags: 0
@@ -2346,7 +2369,7 @@ GameObject:
   - component: {fileID: 1987922743}
   - component: {fileID: 1987922744}
   m_Layer: 0
-  m_Name: RightArrow_0
+  m_Name: Arrow3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2536,11 +2559,13 @@ MonoBehaviour:
   owner: {fileID: 0}
   player: {fileID: 2045299729}
   parryVisual: {fileID: 927968065}
+  comboUI: {fileID: 1756519992}
   newBulletSpeed: 50
   isParrying: 0
   swordDurMax: 5
   swordDur: 5
   anim: {fileID: 0}
+  combo: 
 --- !u!70 &2045299731
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

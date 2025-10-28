@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public Transform player;
     Bullet bulletScript;
     public GameObject parryVisual;
+    public ComboUI comboUI;
 
 
     // ------- Variables
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
     public float swordDurMax = 5f;
     public float swordDur = 5f;
     bool comboActive = false;
+
 
     // ------- Timers
     private float parryWindowTimer = 0.1f; // 250 ms window
@@ -30,7 +32,7 @@ public class Player : MonoBehaviour
     bool NextAttackTracker = true;
 
     // Arrays
-    List<KeyCode> combo = new List<KeyCode>();
+    public List<KeyCode> combo = new List<KeyCode>();
     List<KeyCode> comboInput = new List<KeyCode>();
 
     KeyCode[] possibleKeys = {
@@ -102,12 +104,15 @@ public class Player : MonoBehaviour
 
         // Randomize combo
         // 5 is combo length
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
             // clarify random from unity engine not system
             KeyCode randomKey = possibleKeys[UnityEngine.Random.Range(0, possibleKeys.Length)];
             combo.Add(randomKey);
+            
         }
+
+        comboUI.ShowCombo(combo);
 
         Debug.Log(string.Join(", ", combo));
     }
@@ -135,6 +140,8 @@ public class Player : MonoBehaviour
 
                 comboInput.Clear();
                 comboActive = false;
+
+                comboUI.HideCombo();
 
             }
         }
