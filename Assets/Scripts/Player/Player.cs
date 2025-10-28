@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public GameObject bullet;
     public Transform owner; // owner of fired bullet
     public Transform player;
-    Bullet bulletScript;
+    public Bullet bulletScript;
     public GameObject parryVisual;
     public ComboUI comboUI;
 
@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public float swordDurMax = 5f;
     public float swordDur = 5f;
     bool comboActive = false;
+    
 
 
     // ------- Timers
@@ -59,13 +60,11 @@ public class Player : MonoBehaviour
 
     void ProcessInputs()
     {
-        // Update sharpening state
         anim.SetBool("IsSharpening", swordDur <= 0);
 
         if (!isParrying && Input.GetKeyDown(KeyCode.Space))
         {
-            // Each parry costs 1 durability
-            swordDur--;
+            
             StartCoroutine(ParryWindow());
 
             anim.SetBool("InAttack", true);
@@ -145,6 +144,15 @@ public class Player : MonoBehaviour
 
             }
         }
+    }
+
+    public void ConsumeDurability(int amount = 1)
+    {
+        // reduce durability on each hit
+        swordDur = Mathf.Max(0, swordDur - amount);
+        // Update sharpening state
+        
+        Debug.Log(swordDur);
     }
 
     IEnumerator ParryWindow()

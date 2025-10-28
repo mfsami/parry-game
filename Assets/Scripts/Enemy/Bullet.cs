@@ -4,19 +4,17 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    // For now destroy when hitting player
-    // Set to continuous in inspector to prevent tunneling
-
-    // Jus use tags for now, switch later, get it working
-
     // ------- References
     public GameObject bullet;
     public Transform owner; // owner of fired bullet
     public Transform player;
 
+    public Player playerScript;
+
     // ------- Variables
     public float dmgDealt;
     public float bulletSpeed = 10f;
+    
     
 
 
@@ -27,11 +25,15 @@ public class Bullet : MonoBehaviour
         // Parry window hit
         if (other.CompareTag("Parry"))
         {
+            
             // Player exists on Player object in parent not this child
             Player playerComp = other.gameObject.GetComponentInParent<Player>();
             
             if (playerComp != null && playerComp.isParrying)
             {
+                // MAYDAY MAYDAY WE'VE BEEN HIT ALPHA 1 A-1 WE'VE BEEN HIT
+                playerComp.ConsumeDurability(1);
+
                 Destroy(gameObject);
 
                 if (owner) playerComp.Deflect(owner);
@@ -40,7 +42,6 @@ public class Bullet : MonoBehaviour
                 
                 // Turn off parry window after deflect
                 playerComp.isParrying = false;
-                //Debug.Log("parry");
                 return;
             }
         }
