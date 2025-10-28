@@ -29,8 +29,16 @@ public class Player : MonoBehaviour
     const int BaseLayer = 0;
     bool NextAttackTracker = true;
 
+    // Arrays
     List<KeyCode> combo = new List<KeyCode>();
     List<KeyCode> comboInput = new List<KeyCode>();
+
+    KeyCode[] possibleKeys = {
+        KeyCode.UpArrow,
+        KeyCode.DownArrow,
+        KeyCode.LeftArrow,
+        KeyCode.RightArrow
+    };
 
     private void Awake()
     {
@@ -89,15 +97,17 @@ public class Player : MonoBehaviour
 
     void CreateDurCombo()
     {
-        // Generate sample combo
-        combo = new List<KeyCode> {
-            KeyCode.UpArrow,
-            KeyCode.LeftArrow,
-            KeyCode.RightArrow,
-            KeyCode.DownArrow,
-            KeyCode.UpArrow
+        
+        combo = new List<KeyCode>();
 
-          };
+        // Randomize combo
+        // 5 is combo length
+        for (int i = 0; i < 5; i++)
+        {
+            // clarify random from unity engine not system
+            KeyCode randomKey = possibleKeys[UnityEngine.Random.Range(0, possibleKeys.Length)];
+            combo.Add(randomKey);
+        }
 
         Debug.Log(string.Join(", ", combo));
     }
