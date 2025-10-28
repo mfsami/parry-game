@@ -50,13 +50,16 @@ public class Player : MonoBehaviour
         {
             // Each parry costs 1 durability
             swordDur--;
-
             StartCoroutine(ParryWindow());
+
+            anim.SetBool("InAttack", true);
+
             anim.SetBool("NextAttackTracker", NextAttackTracker);
             anim.ResetTrigger("Attack");
             anim.SetTrigger("Attack");
-
             NextAttackTracker = !NextAttackTracker;
+
+            StartCoroutine(ClearInAttackWhenDone());
         }
 
         // restore key for testing
@@ -86,6 +89,16 @@ public class Player : MonoBehaviour
         isParrying = false;
 
 
+    }
+
+    IEnumerator ClearInAttackWhenDone()
+    {
+        // Wait until the current state finishes
+        yield return null; // let Animator enter the Attack state first
+        var info = anim.GetCurrentAnimatorStateInfo(0);
+        float len = info.length / Mathf.Max(0.0001f, info.speed); // seconds
+        yield return new WaitForSeconds(len);
+        anim.SetBool("InAttack", false);
     }
 
     public void Deflect(Transform owner)
