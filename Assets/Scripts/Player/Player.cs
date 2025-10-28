@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     public bool isParrying;
     public float swordDurMax = 5f;
     public float swordDur = 5f;
+    bool comboActive = false;
 
     // ------- Timers
     private float parryWindowTimer = 0.1f; // 250 ms window
@@ -26,6 +28,9 @@ public class Player : MonoBehaviour
     [SerializeField] Animator anim;
     const int BaseLayer = 0;
     bool NextAttackTracker = true;
+
+    List<KeyCode> combo = new List<KeyCode>();
+    List<KeyCode> comboInput = new List<KeyCode>();
 
     private void Awake()
     {
@@ -38,6 +43,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         ProcessInputs();
+        
     }
 
 
@@ -62,10 +68,65 @@ public class Player : MonoBehaviour
             StartCoroutine(ClearInAttackWhenDone());
         }
 
-        // restore key for testing
-        if (Input.GetKeyDown(KeyCode.R))
+        // If durability is broken, generate a combo
+        if (swordDur <= 0 && !comboActive)
         {
-            swordDur = swordDurMax;
+            comboActive = true;
+            CreateDurCombo();
+            Debug.Log("New combo created!");
+
+        }
+
+        // Register player inputs
+        if (comboActive)
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) RegisterCombo(KeyCode.UpArrow);
+            if (Input.GetKeyDown(KeyCode.DownArrow)) RegisterCombo(KeyCode.DownArrow);
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) RegisterCombo(KeyCode.LeftArrow);
+            if (Input.GetKeyDown(KeyCode.RightArrow)) RegisterCombo(KeyCode.RightArrow);
+        }
+    }
+
+    void CreateDurCombo()
+    {
+        // Generate sample combo
+        combo = new List<KeyCode> {
+            KeyCode.UpArrow,
+            KeyCode.LeftArrow,
+            KeyCode.RightArrow,
+            KeyCode.DownArrow,
+            KeyCode.UpArrow
+
+          };
+
+        Debug.Log(string.Join(", ", combo));
+    }
+
+    void RegisterCombo(KeyCode key)
+    {
+        comboInput.Add(key);
+
+        // Check inputs
+        for (int i = 0;  i < comboInput.Count; i++)
+        {
+            // One wrong input
+            if (comboInput[i] != combo[i])
+            {
+                Debug.Log("WRONG INPUT, RESET");
+                Debug.Log(string.Join(", ", comboInput));
+                comboInput.Clear();
+                return;
+            }
+
+            if (comboInput.Count == combo.Count)
+            {
+                Debug.Log("DURABILITY RESTORED");
+                swordDur = swordDurMax;
+
+                comboInput.Clear();
+                comboActive = false;
+
+            }
         }
     }
 
