@@ -1,22 +1,22 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BulletManager : MonoBehaviour
 {
 
-    GameObject[] enemiesInScene;
-    // Always append all enemies in the scene into this list
+    List<GameObject> enemiesInScene = new List<GameObject>();
     // Randomly choose en enemy from the list, call shoot
     // Timer starts, at 0, call another enemy shoot
 
-    public float shootTimer = 3;
+    public float shootTimer = 2;
     private float currentTime;
 
 
     private void Start()
     {
-        enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");
+        enemiesInScene.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         currentTime = shootTimer;
     }
 
@@ -30,13 +30,17 @@ public class BulletManager : MonoBehaviour
     void ChooseEnemy()
     {
 
+        enemiesInScene.RemoveAll(e => e == null);   // cleanup nulls
+
+        if (enemiesInScene.Count == 0) return;
+
         currentTime -= Time.deltaTime;
 
         if (enemiesInScene == null) return;
 
         if (currentTime <= 0)
         {
-            int randomIndex = Random.Range(0, enemiesInScene.Length);
+            int randomIndex = Random.Range(0, enemiesInScene.Count);
             GameObject chosenEnemy = enemiesInScene[randomIndex];
             Debug.Log(chosenEnemy.name);
             chosenEnemy.GetComponentInChildren<EnemyShoot>().Shoot();
