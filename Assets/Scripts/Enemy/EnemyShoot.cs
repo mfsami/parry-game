@@ -18,8 +18,8 @@ public class EnemyShoot : MonoBehaviour
     public Rigidbody2D bullet;
     private float coolDownRemaining = 0f;
 
-    private int shotsRemaining = 0; // keep track of shots left in burst
-    private float burstDelay = 0.3f;
+    //private int shotsRemaining = 0; // keep track of shots left in burst
+    //private float burstDelay = 0.3f;
 
     private void Start()
     {
@@ -27,44 +27,54 @@ public class EnemyShoot : MonoBehaviour
         coolDownRemaining = Random.Range(2f, 5f);
     }
 
-
-
-    private void Update()
+    private void Awake()
     {
-        coolDownRemaining -= Time.deltaTime;
-
-        if (coolDownRemaining < 0f)
+        // Safety: auto-find player if not assigned in Inspector
+        if (PlayerPos == null)
         {
-            
-            // this will fire until no shots left
-            if (shotsRemaining > 0)
-            {
-                
-                Shoot();
-                shotsRemaining--;
-                coolDownRemaining = burstDelay;
-            }
-
-            else
-            {
-                // start new burst
-                shotsRemaining = Random.Range(1, 2); // burst size 
-                Shoot();
-                shotsRemaining--;
-
-                // if more shots remain, use burst delay, else use a full cooldown
-                if (shotsRemaining > 0)
-                    coolDownRemaining = burstDelay;
-                else
-                    coolDownRemaining = Random.Range(2f, 5f);
-            }
-
-            
+            var player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null) PlayerPos = player.transform;
         }
     }
 
 
-    void Shoot()
+
+    //private void Update()
+    //{
+    //    coolDownRemaining -= Time.deltaTime;
+
+    //    if (coolDownRemaining < 0f)
+    //    {
+
+    //        // this will fire until no shots left
+    //        if (shotsRemaining > 0)
+    //        {
+
+    //            //Shoot();
+    //            shotsRemaining--;
+    //            coolDownRemaining = burstDelay;
+    //        }
+
+    //        else
+    //        {
+    //            // start new burst
+    //            shotsRemaining = Random.Range(1, 2); // burst size 
+    //            Shoot();
+    //            shotsRemaining--;
+
+    //            // if more shots remain, use burst delay, else use a full cooldown
+    //            if (shotsRemaining > 0)
+    //                coolDownRemaining = burstDelay;
+    //            else
+    //                coolDownRemaining = Random.Range(2f, 5f);
+    //        }
+
+
+    //    }
+    //}
+
+
+    public void Shoot()
     {
         // Instantiate at fire point
         Rigidbody2D shotBullet = Instantiate(bullet, FirePoint.position, FirePoint.rotation);
