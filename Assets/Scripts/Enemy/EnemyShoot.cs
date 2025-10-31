@@ -39,40 +39,6 @@ public class EnemyShoot : MonoBehaviour
 
 
 
-    //private void Update()
-    //{
-    //    coolDownRemaining -= Time.deltaTime;
-
-    //    if (coolDownRemaining < 0f)
-    //    {
-
-    //        // this will fire until no shots left
-    //        if (shotsRemaining > 0)
-    //        {
-
-    //            //Shoot();
-    //            shotsRemaining--;
-    //            coolDownRemaining = burstDelay;
-    //        }
-
-    //        else
-    //        {
-    //            // start new burst
-    //            shotsRemaining = Random.Range(1, 2); // burst size 
-    //            Shoot();
-    //            shotsRemaining--;
-
-    //            // if more shots remain, use burst delay, else use a full cooldown
-    //            if (shotsRemaining > 0)
-    //                coolDownRemaining = burstDelay;
-    //            else
-    //                coolDownRemaining = Random.Range(2f, 5f);
-    //        }
-
-
-    //    }
-    //}
-
 
     public void Shoot()
     {
