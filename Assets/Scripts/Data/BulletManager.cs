@@ -13,16 +13,29 @@ public class BulletManager : MonoBehaviour
     public float shootTimer = 2;
     private float currentTime;
 
+    [SerializeField] private Health playerHealth;
+    bool gameOver;
 
     private void Start()
     {
+        
         enemiesInScene.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
         currentTime = shootTimer;
+
+        if (playerHealth == null)
+        {
+            playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+        }
+
+        // listen for death
+        // “When playerHealth triggers the OnDied event, please call the function HandlePlayerDied() from this script.”
+        playerHealth.OnDied += HandlePlayerDied;
     }
 
 
     private void Update()
     {
+        if (gameOver) return; // nothing fires after death
         //Debug.Log(enemiesInScene.Length);
         ChooseEnemy();
     }
@@ -50,6 +63,11 @@ public class BulletManager : MonoBehaviour
         }
 
         
+    }
+
+    void HandlePlayerDied()
+    {
+        gameOver = true;
     }
 
     

@@ -8,15 +8,19 @@ public class Bullet : MonoBehaviour
     public GameObject bullet;
     public Transform owner; // owner of fired bullet
     public Transform player;
+    EntityVFX entityVFX;
 
     public Player playerScript;
 
     // ------- Variables
     public float dmgDealt;
     public float bulletSpeed = 10f;
-    
-    
 
+
+    private void Awake()
+    {
+        entityVFX = GetComponent<EntityVFX>();
+    }
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -56,6 +60,11 @@ public class Bullet : MonoBehaviour
         if (hp != null)
         {
             hp.health -= dmgDealt;
+
+            // Hit flash
+            var vfx = other.GetComponent<EntityVFX>();
+            if (vfx != null) vfx.PlayHitEffect();
+
             Destroy(gameObject);
         }
 

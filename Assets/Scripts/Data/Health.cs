@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem.Processors;
+using System;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] public float health;
     Animator anim;
-    private bool isDead;
+    public bool isDead { get; private set; }
+    public event Action OnDied;
 
     private void Awake()
     {
@@ -20,16 +22,20 @@ public class Health : MonoBehaviour
         {
             if (CompareTag("Enemy"))
             {
-                anim.SetTrigger("Dead");
+                //anim.SetTrigger("Dead");
                 isDead = true;  // prevent repeating the trigger
                 
                 Destroy(gameObject, 1.5f); // delay for animation
             }
             else if (CompareTag("Player"))
             {
-                
-                Debug.Log("Player Died");
-                
+                anim.SetTrigger("PlayerDead");
+                isDead = true;
+
+                // broadcast
+                OnDied?.Invoke();
+                //Debug.Log("Player Died");
+
             }
 
         }
