@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6054054820708224042, guid: 6532e1af500767444ae61b990cf77536, type: 3}
+      propertyPath: health
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6465986253229168923, guid: 6532e1af500767444ae61b990cf77536, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
@@ -749,6 +753,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6054054820708224042, guid: 6532e1af500767444ae61b990cf77536, type: 3}
+      propertyPath: health
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6465986253229168923, guid: 6532e1af500767444ae61b990cf77536, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -1641,6 +1649,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6054054820708224042, guid: 6532e1af500767444ae61b990cf77536, type: 3}
+      propertyPath: health
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6465986253229168923, guid: 6532e1af500767444ae61b990cf77536, type: 3}
       propertyPath: m_Name
       value: Enemy (3)
@@ -2500,6 +2512,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6054054820708224042, guid: 6532e1af500767444ae61b990cf77536, type: 3}
+      propertyPath: health
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6465986253229168923, guid: 6532e1af500767444ae61b990cf77536, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -2543,6 +2559,18 @@ PrefabInstance:
     - target: {fileID: 7546295738158879439, guid: 6532e1af500767444ae61b990cf77536, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808381618387303783, guid: 6532e1af500767444ae61b990cf77536, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808381618387303783, guid: 6532e1af500767444ae61b990cf77536, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7808381618387303783, guid: 6532e1af500767444ae61b990cf77536, type: 3}
+      propertyPath: m_Color.r
+      value: 0.4716981
       objectReference: {fileID: 0}
     - target: {fileID: 8544674102880880539, guid: 6532e1af500767444ae61b990cf77536, type: 3}
       propertyPath: PlayerPos

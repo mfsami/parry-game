@@ -11,14 +11,11 @@ public class Health : MonoBehaviour
     void Awake() => anim = GetComponent<Animator>();
 
     // ---- PUBLIC DAMAGE ENTRY POINT ----
-    public void ApplyDamage(float amount, GameObject source = null, string reason = "unknown")
+    public void ApplyDamage(float amount)
     {
         if (isDead) return;
 
-        float before = health;
         health = Mathf.Max(0f, health - amount);
-
-        
 
         if (health <= 0f)
             HandleDeath();

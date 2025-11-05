@@ -3,68 +3,61 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    // ======================= REFERENCES / FIELDS =======================
+    
+    public Transform owner;              // Shooter's root. Set by EnemyShoot on spawn; used to re-aim on parry.
+ 
 
-    // ------- References
-    public GameObject bullet;
-    public Transform owner; // owner of fired bullet
-    public Transform player;
-    EntityVFX entityVFX;
-
-    public Player playerScript;
-
+    // Allegiance = who this bullet belongs to (Enemy when fired, Player after parry).
+    public enum Allegiance { Enemy, Player }
+    [SerializeField] private Allegiance allegiance = Allegiance.Enemy;
     public void SetAllegianceEnemy() => allegiance = Allegiance.Enemy;
     public void SetAllegiancePlayer() => allegiance = Allegiance.Player;
 
-
-    // ------- Variables
-    public float dmgDealt;
-    public float bulletSpeed = 10f;
-    public float deflectedBulletSpeed = 20f;
-    private bool hasHit = false;
-    private Rigidbody2D rb;
-
-
-    public enum Allegiance { Enemy, Player }
-    [SerializeField] private Allegiance allegiance = Allegiance.Enemy;
+    // ======================= TUNABLES / RUNTIME =======================
+    
+    public float dmgDealt = 1f;                  // Damage dealt on hit.
+    public float bulletSpeed = 10f;              // Default enemy bullet speed.
+    public float deflectedBulletSpeed = 20f;     // Deflected speed.
+    private bool hasHit = false;                 // One-hit guard so a bullet doesn't double-apply in same frame.
+    private Rigidbody2D rb;                      // Cached RB2D
 
     private void OnEnable()
     {
+        // Reset per-life state 
         hasHit = false;
-        
     }
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        entityVFX = GetComponent<EntityVFX>();
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        // Guard: already hit something this frame
         if (hasHit) return;
-        // Parry window hit
+
+        // ---------- PARRY WINDOW ----------
+        // Reflects if we hit the parry trigger *while* the player is parrying.
         if (other.CompareTag("Parry"))
         {
-
-            // Player exists on Player object in parent not this child
-            var playerComp = other.gameObject.GetComponentInParent<Player>();
+            
+            var playerComp = other.GetComponentInParent<Player>();
 
             if (playerComp && playerComp.isParrying)
             {
-                // MAYDAY MAYDAY WE'VE BEEN HIT ALPHA 1 A-1 WE'VE BEEN HIT
+                // MAYDAY SWORD DOWN SWORD DOWN SHES BEEN HIT
                 playerComp.ConsumeDurability(1);
 
-                // flip owner
+                // Allegience flipped to player, can damage enemies
                 allegiance = Allegiance.Player;
 
+                // flip physics layers
                 SetLayerRecursively(gameObject, LayerMask.NameToLayer("PlayerBullet"));
 
-                //Debug.Log($"[PARRY] reflected bullet from owner={owner?.name ?? "null"} at {Time.time:0.000}");
-
-
-                // RE-AIM: back to the shooter if we know it; else just bounce back
+                // Re-aim the reflected bullet back to its shooter if we know who fired it.
                 if (owner != null)
                 {
                     Vector2 dir = ((Vector2)owner.position - (Vector2)transform.position).normalized;
@@ -72,27 +65,28 @@ public class Bullet : MonoBehaviour
                 }
                 else
                 {
-                    rb.linearVelocity = -rb.linearVelocity; // simple reflect fallback
+                    // Fallback if no enemy
+                    Destroy(gameObject);
                 }
 
-                // small nudge so we don't keep overlapping the parry collider
+                // Small positional nudge so we exit the parry trigger this frame (avoids re-trigger spam).
                 transform.position += (Vector3)(rb.linearVelocity.normalized * 0.05f);
 
-                // Turn off parry window after deflect
+                // Close the parry window for this attempt.
                 playerComp.isParrying = false;
-                return;
+                return; 
             }
         }
 
-
-        // Notice get component on gameObject. Not collision
-
-        // Check if this collider belongs to something with health
+        
         var hp = other.GetComponentInParent<Health>();
         if (!hp) return;
 
-        // Filter: enemy bullets damage Player; player bullets damage Enemy
-        // use the ROOT's tag, not the child collider's tag
+
+        // Allegiance determines which *side* we are allowed to damage:
+        //  - Enemy bullet can only damage Player-tagged roots.
+        //  - Player (parried) bullet can only damage Enemy-tagged roots.
+
         bool hitIsPlayerRoot = hp.gameObject.CompareTag("Player");
         bool hitIsEnemyRoot = hp.gameObject.CompareTag("Enemy");
 
@@ -104,29 +98,27 @@ public class Bullet : MonoBehaviour
 
         hasHit = true;
 
-        //Debug.Log($"[HIT] alleg={allegiance} targetRoot={hp.name} owner={owner?.name ?? "null"} at {Time.time:0.000}");
 
+        hp.ApplyDamage(dmgDealt);
 
-        hp.ApplyDamage(dmgDealt, gameObject, $"bullet-{allegiance}");
-
+        // Hit flash on damaged entity
         var vfx = hp.GetComponent<EntityVFX>();
         if (vfx) vfx.PlayHitEffect();
 
+        // Bullet is done after a successful hit.
         Destroy(gameObject);
     }
 
+ 
     void SetLayerRecursively(GameObject obj, int layer)
     {
         obj.layer = layer;
-        foreach (Transform t in obj.transform) SetLayerRecursively(t.gameObject, layer);
+        foreach (Transform t in obj.transform)
+            SetLayerRecursively(t.gameObject, layer);
     }
 
-
-    // Destroys if outside cam view
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
     }
-
-
 }

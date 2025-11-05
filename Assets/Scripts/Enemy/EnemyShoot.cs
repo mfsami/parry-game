@@ -33,7 +33,7 @@ public class EnemyShoot : MonoBehaviour
         if (PlayerPos == null)
         {
             var player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null) PlayerPos = player.transform;
+            if (player) PlayerPos = player.transform;
         }
     }
 
@@ -50,8 +50,6 @@ public class EnemyShoot : MonoBehaviour
 
         b.owner = transform.root;          // make THIS enemy the owner
         b.SetAllegianceEnemy();            // tell the bullet it's from an enemy
-
-        b.player = PlayerPos;
 
         Vector2 direction = (PlayerPos.position - FirePoint.position).normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
