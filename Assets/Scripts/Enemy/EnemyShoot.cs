@@ -42,38 +42,21 @@ public class EnemyShoot : MonoBehaviour
 
     public void Shoot()
     {
-        // Instantiate at fire point
         Rigidbody2D shotBullet = Instantiate(bullet, FirePoint.position, FirePoint.rotation);
+        shotBullet.gameObject.layer = LayerMask.NameToLayer("EnemyBullet");
 
-        // Get bullet component
-        Bullet bulletScript = shotBullet.GetComponent<Bullet>();
+        var b = shotBullet.GetComponent<Bullet>();
+        if (!b) { Destroy(shotBullet.gameObject); return; }
 
-        // Set the owner and destroy if owner dead
-        if (bulletScript) bulletScript.owner = this.transform;
-        else Destroy(shotBullet.gameObject);
+        b.owner = transform.root;          // make THIS enemy the owner
+        b.SetAllegianceEnemy();            // tell the bullet it's from an enemy
 
-        bulletScript.player = PlayerPos;
-        //Debug.Log($"{this.name} owns bullet {shotBullet.name}");
+        b.player = PlayerPos;
 
-        // Calculate players direction vector
-        // B - A = "how do I get from A to B?"
         Vector2 direction = (PlayerPos.position - FirePoint.position).normalized;
-
-        // Bullet rotation
-        // Imagine your direction vector as an arrow from the enemy’s FirePoint to the player.
-        // So essentially we want to know "what is the angle of this arrow relative to the x-axis"
-        // Mathf.Atan2(direction.y, direction.x) gives the angle (in radians) between the positive x-axis and your vector (x, y).
-
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Spin object that many degrees around Z and set it to our bullets rotation
-
-        // We use vector3.forward in 2d here because we are always rotating ON the Z axis
-        // Imagine a pinned piece of paper on a wall. The pin is the z axis, we can rotate this paper now with this pin on this axis
         shotBullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        // Set velocity and launch to that direction
-        shotBullet.linearVelocity = direction * bulletScript.bulletSpeed;
+        shotBullet.linearVelocity = direction * b.bulletSpeed;
 
     }
 }

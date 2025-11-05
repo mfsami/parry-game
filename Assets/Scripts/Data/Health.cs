@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem.Processors;
 using System;
 
 public class Health : MonoBehaviour
@@ -9,37 +8,38 @@ public class Health : MonoBehaviour
     public bool isDead { get; private set; }
     public event Action OnDied;
 
-    private void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
+    void Awake() => anim = GetComponent<Animator>();
 
-    private void Update()
+    // ---- PUBLIC DAMAGE ENTRY POINT ----
+    public void ApplyDamage(float amount, GameObject source = null, string reason = "unknown")
     {
         if (isDead) return;
 
-        if (health <= 0)
+        float before = health;
+        health = Mathf.Max(0f, health - amount);
+
+        
+
+        if (health <= 0f)
+            HandleDeath();
+    }
+
+    // ---- CENTRALIZED DEATH BEHAVIOR ----
+    private void HandleDeath()
+    {
+        if (isDead) return;
+        isDead = true;
+
+        
+        if (CompareTag("Enemy"))
         {
-            if (CompareTag("Enemy"))
-            {
-                //anim.SetTrigger("Dead");
-                isDead = true;  // prevent repeating the trigger
-                
-                Destroy(gameObject, 1.5f); // delay for animation
-            }
-            else if (CompareTag("Player"))
-            {
-                anim.SetTrigger("PlayerDead");
-                isDead = true;
-
-                // broadcast
-                OnDied?.Invoke();
-                //Debug.Log("Player Died");
-
-            }
-
+            // anim?.SetTrigger("Dead");  // if you add it later
+            Destroy(gameObject);   // allow death anim/VFX add delay later
         }
-
+        else if (CompareTag("Player"))
+        {
+            anim?.SetTrigger("PlayerDead");
+            OnDied?.Invoke();
         }
-
+    }
 }

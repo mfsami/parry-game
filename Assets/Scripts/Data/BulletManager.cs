@@ -55,7 +55,7 @@ public class BulletManager : MonoBehaviour
         {
             int randomIndex = Random.Range(0, enemiesInScene.Count);
             GameObject chosenEnemy = enemiesInScene[randomIndex];
-            Debug.Log(chosenEnemy.name);
+            
             chosenEnemy.GetComponentInChildren<EnemyShoot>().Shoot();
 
             

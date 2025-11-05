@@ -152,7 +152,7 @@ public class Player : MonoBehaviour
         swordDur = Mathf.Max(0, swordDur - amount);
         // Update sharpening state
         
-        Debug.Log(swordDur);
+        //Debug.Log(swordDur);
     }
 
     IEnumerator ParryWindow()
@@ -206,7 +206,7 @@ public class Player : MonoBehaviour
 
         // Change new bullets layer
         shotBullet.gameObject.layer = LayerMask.NameToLayer("DeflectedBullet");
-        Debug.Log($"{rb.name} is now on layer {LayerMask.LayerToName(rb.gameObject.layer)}");
+        //Debug.Log($"{rb.name} is now on layer {LayerMask.LayerToName(rb.gameObject.layer)}");
 
 
     }
